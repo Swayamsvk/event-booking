@@ -9,7 +9,7 @@ router.route('/').get((req,res)=>{
     .catch(err=>res.status(400).json('Error:'+err));
 });
 
-router.route('/add').post((req,res)=>{
+router.route('/add').post(passport.authenticate('jwt',{session : false}),(req,res)=>{
     const name = req.body.name;
     const date = req.body.date;
     const time = req.body.time;
@@ -28,20 +28,20 @@ router.route('/add').post((req,res)=>{
     .catch(err => res.status(400).json('Error:'+err));
 });
 
-router.route('/:id').get((req,res)=>{
+router.route('/:id').get(passport.authenticate('jwt',{session : false}),(req,res)=>{
     Event.findById(req.params.id)
     .then(event =>res.json(event))
     .catch(err => res.status(400).json('Error:' + err));
 
 });
 
-router.route('/:id').delete((req,res) =>{
+router.route('/:id').delete(passport.authenticate('jwt',{session : false}),(req,res) =>{
     Event.findByIdAndDelete(req.params.id)
     .then(()=>res.json('Event deleted'))
     .catch(err => res.status(400).json('Error:'+err));
 })
 
-router.route('/update/:id').post((req,res)=>{
+router.route('/update/:id').post(passport.authenticate('jwt',{session : false}),(req,res)=>{
     Event.findById(req.params.id)
     .then(event => {
         event.name = req.body.name;
