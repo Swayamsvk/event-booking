@@ -5,7 +5,8 @@ import './App.css';
 import Navbar from './components/navbar.component';
 import CreateEvent from './components/create-event.component';
 import EditEvent from './components/edit-event.component';
-import EventList from './components/event-list.component'
+import EventList from './components/event-list.component';
+import Register from './components/register.component'
 
 
 
@@ -18,6 +19,7 @@ function App() {
         <Route path="/" exact component={EventList}/>
         <Route path="/edit/:id" component={EditEvent}/>
         <Route path="/create" component={CreateEvent}/>
+        <Route path="/register" component={Register}/>
     </div>
   </Router>  
     
