@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
 import axios from 'axios';
+import fire from '../config/fire';
 
 export default class Register extends Component{
     constructor(props){
@@ -7,12 +8,10 @@ export default class Register extends Component{
 
         this.onChangeName = this.onChangeName.bind(this);
         this.onChangePassword = this.onChangePassword.bind(this);
-        this.onChangeRole = this.onChangeRole.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.state={
             username:'',
             password:'',
-            role:''
         }
     }
 
@@ -27,23 +26,23 @@ export default class Register extends Component{
             password:e.target.value
         })
     }
-    onChangeRole(e){
-        this.setState({
-            role:e.target.value
-        })
-    }
 
     onSubmit(e){
         e.preventDefault();
 
-        const users={
-            username:this.state.username,
-            password:this.state.password,
-            role:this.state.role
+        e.preventDefault();
+        fire.auth().createUserWithEmailAndPassword(this.state.username,this.state.password).then((u)=>{
+            console.log(u);
+        }).catch((err)=> {
+            console.log(err);
+        })
 
-        }
+        // const users={
+        //     username:this.state.username,
+        //     password:this.state.password
+        // }
 
-        console.log(users);
+        // console.log(users);
         // axios.post('http://localhost:5000/user/register',users)
         // .then(res => res.data)
 
@@ -71,15 +70,6 @@ export default class Register extends Component{
                         className="form-control"
                         value={this.state.password}
                         onChange={this.onChangePassword}/>
-                    </div>
-                    <div className="form-group">
-                        <label>Role:</label>
-                        <input 
-                        required
-                        type="text"
-                        className="form-control"
-                        value={this.state.role}
-                        onChange={this.onChangeRole}/>
                     </div>
                     <div className="form-group">
                        <input type="submit" value="Create User Log" className="btn btn-primary"/>

@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
+import fire from '../config/fire'
 
 const Event = props =>(
     <tr>
@@ -45,6 +46,9 @@ eventList(){
         return <Event event={currentevent} deleteEvent={this.deleteEvent} key={currentevent._id}/>;
     })
 }
+logout(){
+    fire.auth().signOut();
+}
     render(){
         return(
             <div>
@@ -64,6 +68,7 @@ eventList(){
                     </tbody>
 
                 </table>
+                <button onClick={this.logout}>Logout</button>
             </div>
         )
     }
