@@ -1,5 +1,8 @@
 import React,{Component} from 'react';
 import axios from 'axios';
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
+
 
 export default class CreateEvent extends Component{
     constructor(props){
@@ -17,7 +20,7 @@ export default class CreateEvent extends Component{
 
         this.state={
             name: '',
-            date: '',
+            date: new Date(),
             time: '',
             price: 0,
             place: ''
@@ -30,9 +33,9 @@ export default class CreateEvent extends Component{
         })
     }
     
-    onChangeDate(e){
+    onChangeDate(date){
         this.setState({
-            date: e.target.value
+            date: date
         })
     }
 
@@ -89,16 +92,17 @@ export default class CreateEvent extends Component{
                 </div>
                 <div className="form-group">
                     <label>Date:</label>
-                    <input type="text"
-                    required
-                    className="form-control"
-                    value={this.state.date}
+                    <div>
+                    <DatePicker
+                    selected={this.state.date}
                     onChange={this.onChangeDate}/>
+                    </div>
                 </div>
-                <div className="form-group">
+                <div className="form-group md-form md-outline input-with-post-icon timepicker">
                     <label>Time:</label>
                     <input type="text"
                     required
+                    placeholder="Select time"
                     className="form-control"
                     value={this.state.time}
                     onChange={this.onChangeTime}/>

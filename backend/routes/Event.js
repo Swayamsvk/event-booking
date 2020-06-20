@@ -1,7 +1,7 @@
 const router= require('express').Router();
 let Event=require('../models/Event.model');
-const passport = require('passport');
-const JWT = require('jsonwebtoken');
+// const passport = require('passport');
+// const JWT = require('jsonwebtoken');
 
 router.route('/').get((req,res)=>{
     Event.find()
@@ -11,7 +11,7 @@ router.route('/').get((req,res)=>{
 
 router.route('/add').post((req,res)=>{
     const name = req.body.name;
-    const date = req.body.date;
+    const date = Date.parse(req.body.date);
     const time = req.body.time;
     const price = Number(req.body.price);
     const place = req.body.place;
@@ -45,7 +45,7 @@ router.route('/update/:id').post((req,res)=>{
     Event.findById(req.params.id)
     .then(event => {
         event.name = req.body.name;
-        event.date = req.body.date;
+        event.date = date.parse(req.body.date);
         event.time = req.body.price;
         event.place = req.body.place;
         

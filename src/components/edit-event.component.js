@@ -1,5 +1,7 @@
 import React,{Component} from 'react';
 import axios from 'axios';
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 
 export default class EditEvent extends Component{
     constructor(props){
@@ -17,7 +19,7 @@ export default class EditEvent extends Component{
 
         this.state={
             name: '',
-            date: '',
+            date: new Date(),
             time: '',
             price: 0,
             place: ''
@@ -29,7 +31,7 @@ export default class EditEvent extends Component{
         .then(response => {
             this.setState({
                 name:response.data.name,
-                date:response.data.date,
+                date:new Date(response.data.date),
                 time:response.data.time,
                 price:response.data.price,
                 place:response.data.place
@@ -46,9 +48,9 @@ export default class EditEvent extends Component{
         })
     }
     
-    onChangeDate(e){
+    onChangeDate(date){
         this.setState({
-            date: e.target.value
+            date: date
         })
     }
 
@@ -105,11 +107,11 @@ export default class EditEvent extends Component{
                 </div>
                 <div className="form-group">
                     <label>Date:</label>
-                    <input type="text"
-                    required
-                    className="form-control"
-                    value={this.state.date}
+                    <div>
+                    <DatePicker
+                    selected={this.state.date}
                     onChange={this.onChangeDate}/>
+                    </div>
                 </div>
                 <div className="form-group">
                     <label>Time:</label>

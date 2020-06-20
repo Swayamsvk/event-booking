@@ -1,11 +1,12 @@
 import React,{Component} from 'react';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
+import './event-list.css';
 
 const Event = props =>(
     <tr>
         <td>{props.event.name}</td>
-        <td>{props.event.date}</td>
+        <td>{props.event.date.substring(0,10)}</td>
         <td>{props.event.time}</td>
         <td>{props.event.price}</td>
         <td>{props.event.place}</td>
@@ -49,7 +50,7 @@ eventList(){
         return(
             <div>
                 <h3>Logged Events</h3>
-                <table className="table-light">
+                <table className="table-light content-table">
                     <thead className="thead-light">
                         <tr>
                             <th>name</th>
