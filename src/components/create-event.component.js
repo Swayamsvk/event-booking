@@ -1,135 +1,140 @@
-import React,{Component} from 'react';
-import axios from 'axios';
-import DatePicker from 'react-datepicker';
+import React, { Component } from "react";
+import axios from "axios";
+import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
+export default class CreateEvent extends Component {
+  constructor(props) {
+    super(props);
 
-export default class CreateEvent extends Component{
-    constructor(props){
-        super(props);
+    this.onChangeName = this.onChangeName.bind(this);
+    this.onChangeDate = this.onChangeDate.bind(this);
+    this.onChangeTime = this.onChangeTime.bind(this);
+    this.onChangePrice = this.onChangePrice.bind(this);
+    this.onChangePlace = this.onChangePlace.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
 
-        this.onChangeName = this.onChangeName.bind(this);
-        this.onChangeDate = this.onChangeDate.bind(this);
-        this.onChangeTime = this.onChangeTime.bind(this);
-        this.onChangePrice = this.onChangePrice.bind(this);
-        this.onChangePlace = this.onChangePlace.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
+    this.state = {
+      name: "",
+      date: new Date(),
+      time: "",
+      price: 0,
+      place: "",
+    };
+  }
 
+  onChangeName(e) {
+    this.setState({
+      name: e.target.value,
+    });
+  }
 
+  onChangeDate(date) {
+    this.setState({
+      date: date,
+    });
+  }
+  //changed time
+  onChangeTime(e) {
+    this.setState({
+      time: e.target.value,
+    });
+  }
 
+  onChangePrice(e) {
+    this.setState({
+      price: e.target.value,
+    });
+  }
 
-        this.state={
-            name: '',
-            date: new Date(),
-            time: '',
-            price: 0,
-            place: ''
-        }
-    }
+  onChangePlace(e) {
+    this.setState({
+      place: e.target.value,
+    });
+  }
 
-    onChangeName(e){
-        this.setState({
-            name:e.target.value
-        })
-    }
-    
-    onChangeDate(date){
-        this.setState({
-            date: date
-        })
-    }
+  onSubmit(e) {
+    e.preventDefault();
 
-    onChangeTime(e){
-        this.setState({
-            time: e.target.value
-        })
-    }
+    const events = {
+      name: this.state.name,
+      date: this.state.date,
+      time: this.state.time,
+      price: this.state.price,
+      place: this.state.place,
+    };
 
-    onChangePrice(e){
-        this.setState({
-            price:e.target.value
-        })
-    }
+    axios
+      .post("http://localhost:5000/events/add", events)
+      .then((res) => console.log(res.data));
 
-    onChangePlace(e){
-        this.setState({
-            place:e.target.value
-        })
-    }
+    window.location = "/";
+  }
 
-    onSubmit(e){
-        e.preventDefault();
-
-        const events ={
-            name:this.state.name,
-            date:this.state.date,
-            time:this.state.time,
-            price:this.state.price,
-            place:this.state.place
-        }
-
-        
-        axios.post('http://localhost:5000/events/add',events)
-        .then(res => console.log(res.data))
-
-        window.location ='/';
-    }
-
-
-
-    render(){
-        return(
+  render() {
+    return (
+      <div>
+        <h3>Create New Event Log</h3>
+        <form onSubmit={this.onSubmit}>
+          <div className="form-group">
+            <label>Username:</label>
+            <input
+              type="text"
+              required
+              className="form-control"
+              value={this.state.name}
+              onChange={this.onChangeName}
+            />
+          </div>
+          <div className="form-group">
+            <label>Date:</label>
             <div>
-                <h3>Create New Event Log</h3>
-                <form onSubmit={this.onSubmit}>
-                <div className="form-group">
-                    <label>Username:</label>
-                    <input type="text"
-                    required
-                    className="form-control"
-                    value={this.state.name}
-                    onChange={this.onChangeName}/>
-                </div>
-                <div className="form-group">
-                    <label>Date:</label>
-                    <div>
-                    <DatePicker
-                    selected={this.state.date}
-                    onChange={this.onChangeDate}/>
-                    </div>
-                </div>
-                <div className="form-group md-form md-outline input-with-post-icon timepicker">
-                    <label>Time:</label>
-                    <input type="text"
-                    required
-                    placeholder="Select time"
-                    className="form-control"
-                    value={this.state.time}
-                    onChange={this.onChangeTime}/>
-                </div>
-                <div className="form-group">
-                    <label>Price:</label>
-                    <input type="text"
-                    required
-                    className="form-control"
-                    value={this.state.price}
-                    onChange={this.onChangePrice}/>
-                </div>
-                <div className="form-group">
-                    <label>Place:</label>
-                    <input type="text"
-                    required
-                    className="form-control"
-                    value={this.state.place}
-                    onChange={this.onChangePlace}/>
-                </div>
-                <div className="form-group">
-                    <input type="submit" value="Create Event Log" className="btn btn-primary"/>
-                </div>
-
-                </form>
+              <DatePicker
+                selected={this.state.date}
+                onChange={this.onChangeDate}
+              />
             </div>
-            
-        )
-    }
+          </div>
+          <div className="form-group md-form md-outline input-with-post-icon timepicker">
+            <label>Time:</label>
+            <input
+              type="text"
+              required
+              placeholder="Select time"
+              className="form-control"
+              value={this.state.time}
+              onChange={this.onChangeTime}
+            />
+          </div>
+          <div className="form-group">
+            <label>Price:</label>
+            <input
+              type="text"
+              required
+              className="form-control"
+              value={this.state.price}
+              onChange={this.onChangePrice}
+            />
+          </div>
+          <div className="form-group">
+            <label>Place:</label>
+            <input
+              type="text"
+              required
+              className="form-control"
+              value={this.state.place}
+              onChange={this.onChangePlace}
+            />
+          </div>
+          <div className="form-group">
+            <input
+              type="submit"
+              value="Create Event Log"
+              className="btn btn-primary"
+            />
+          </div>
+        </form>
+      </div>
+    );
+  }
 }
