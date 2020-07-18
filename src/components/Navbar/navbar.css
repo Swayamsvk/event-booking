@@ -1,40 +1,16 @@
-nav{
-    background: #0082e6;
-    height: 80px;
-    width: 100%;
+nav {
+  background: #0082e6;
+  height: 80px;
+  width: 100%;
 }
-nav ul{
-    float: right;
-    margin-right: 20px;
-}
-
-nav ul li{
-    display: inline-block;
-    line-height: 70px;
-    margin: 0 5px;
+nav ul {
+  float: right;
+  margin-right: 20px;
 }
 
-.link_main{
-    color: white;
-    display: inline-block;
-    line-height: 70px;
-    font-size: 19px;
-    text-transform: uppercase;
-    border-radius: 3px;
-    margin: 0 5px;
-    position: absolute;
-    
-}
-
-.link{
-    color: white;
-    font-size: 17px;
-    padding: 7px 13px;
-    text-transform: uppercase;
-    border-radius: 3px;
-}
-
-active,link:hover{
-    background: #1b9bff;
-    transition: 5s;
+nav ul li {
+  display: inline-block;
+  line-height: 70px;
+  margin: 0 5px;
+  color: white;
 }
