@@ -15,6 +15,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
     "react-time-input": "0.0.19",
+    "react-transition-group": "^4.4.1",
     "websocket-extensions": "^0.1.4"
   },
   "scripts": {

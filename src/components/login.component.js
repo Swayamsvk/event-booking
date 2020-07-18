@@ -1,120 +1,79 @@
-import React,{Component} from 'react';
-import axios from 'axios';
+import React, { useState, useContext, useEffect } from "react";
+import AuthContext from "../context/auth/authContext";
+import AlertContext from "../context/alert/alertContext";
 
-// const Logout = props =>(
-// <button>{props.logout}</button>
-// )
+const Login = (props) => {
+  const alertContext = useContext(AlertContext);
+  const authContext = useContext(AuthContext);
 
-export default class Login extends Component{
-    constructor(props){
-        super(props);
+  const { setAlert } = alertContext;
+  const { login, error, clearErrors, isAuthenticated } = authContext;
 
-        this.onChangeName = this.onChangeName.bind(this);
-        this.onChangePassword = this.onChangePassword.bind(this);
-        this.onLogout = this.onLogout.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
-
-        this.state={
-            username:'',
-            password:''
-        }
+  useEffect(() => {
+    if (isAuthenticated) {
+      props.history.push("/");
     }
-
-    onChangeName(e){
-        this.setState({
-            username:e.target.value
-        })
-
+    if (error === "Invalid Credentials") {
+      setAlert(error, "danger");
+      clearErrors();
     }
+    //eslint-disable-next-line
+  }, [error, isAuthenticated, props.history]);
 
-    onChangePassword(e){
-        this.setState({
-            password:e.target.value
-        })
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
+
+  const { email, password } = user;
+
+  const onChange = (e) => setUser({ ...user, [e.target.name]: e.target.value });
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    if (email === "" || password === "") {
+      setAlert("Please fill in all fields", "danger");
+    } else {
+      login({
+        email,
+        password,
+      });
     }
+  };
+  return (
+    <div className="form-container">
+      <h1>
+        Account <span className="text-primary">Login</span>
+      </h1>
+      <form onSubmit={onSubmit}>
+        <div className="form-group">
+          <label htmlFor="email">Email Address</label>
+          <input
+            type="email"
+            name="email"
+            value={email}
+            onChange={onChange}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            name="password"
+            value={password}
+            onChange={onChange}
+            required
+          />
+        </div>
+        <input
+          type="submit"
+          value="Login"
+          className="btn btn-primary btn-block"
+        />
+      </form>
+    </div>
+  );
+};
 
-    onLogout(e){
-       
-        e.preventDefault()
-        axios.get('http://localhost:5000/user/logout')
-        .then(res=>console.log(res))
-        
-    }
-
-    onSubmit(e){
-        e.preventDefault();
-
-        const user={
-            username:this.state.username,
-            password:this.state.password
-
-        }
-
-        console.log(user);
-        // axios.get('http://localhost:5000/user/authenticated',user)
-        // .then(res => console.log(res))
-        // .catch(function(error) {
-        //     console.log(error);
-        // })
-        
-         axios.post('http://localhost:5000/user/login',user)
-        //  .then(res => res.data)
-         .then(res=>{
-           
-             
-             console.log(res);
-             if(res.data.isAuthenticated){
-                // console.log(res.cookie)
-                 console.log("authenticated")
-                //  window.location = '/';
-             }
-         })
-        
-       
-
-        
-       
-
-        // window.location = '/';
-    }
-
-    render(){
-        return(
-            <div>
-                <div>Login</div>
-                <form onSubmit={this.onSubmit}>
-                    <div className="form-group">
-                        <label>Username:</label>
-                        <input 
-                        required
-                        type="text"
-                        className="form-control"
-                        value={this.state.username}
-                        onChange={this.onChangeName}/>
-
-                    </div>
-                    <div className="form-group">
-                        <label>Password:</label>
-                        <input 
-                        required
-                        type="password"
-                        className="form-control"
-                        value={this.state.password}
-                        onChange={this.onChangePassword}/>
-                        
-                    </div>
-                    <div className="form-group">
-                    <input type="submit" value="Login" className="btn btn-primary"/>    
-                    </div>
-                    
-                </form>
-                <div className="form-group">
-                    <button
-                    required
-                    type="submit"
-                    onClick={this.onLogout}>Logout</button>
-                    </div>
-            </div>
-        )
-    }
-}
+export default Login;

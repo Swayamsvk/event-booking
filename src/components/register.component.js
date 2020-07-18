@@ -1,91 +1,107 @@
-import React,{Component} from 'react';
-import axios from 'axios';
+import React, { useState, useContext, useEffect } from "react";
+import AlertContext from "../context/alert/alertContext";
+import AuthContext from "../context/auth/authContext";
 
-export default class Register extends Component{
-    constructor(props){
-        super(props);
+const Register = (props) => {
+  const alertContext = useContext(AlertContext);
+  const authContext = useContext(AuthContext);
 
-        this.onChangeName = this.onChangeName.bind(this);
-        this.onChangePassword = this.onChangePassword.bind(this);
-        this.onChangeRole = this.onChangeRole.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
-        this.state={
-            username:'',
-            password:'',
-            role:''
-        }
+  const { setAlert } = alertContext;
+  const { register, error, clearErrors, isAuthenticated } = authContext;
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      props.history.push("/");
     }
-
-    onChangeName(e){
-        this.setState({
-            username:e.target.value
-        })
+    if (error === "User already exists") {
+      setAlert(error, "danger");
+      clearErrors();
     }
+    //eslint-disable-next-line
+  }, [error, isAuthenticated, props.history]);
 
-    onChangePassword(e){
-        this.setState({
-            password:e.target.value
-        })
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    password: "",
+    password2: "",
+  });
+
+  const { name, email, password, password2 } = user;
+
+  const onChange = (e) => setUser({ ...user, [e.target.name]: e.target.value });
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+
+    if (name === "" || email === "" || password === "") {
+      setAlert("Please enter all fields", "danger");
+    } else if (password !== password2) {
+      setAlert("Passwords do not match", "danger");
+    } else {
+      register({
+        name,
+        email,
+        password,
+      });
     }
-    onChangeRole(e){
-        this.setState({
-            role:e.target.value
-        })
-    }
+  };
+  return (
+    <div className="form-container">
+      <h1>
+        Account <span className="text-primary">Register</span>
+      </h1>
+      <form onSubmit={onSubmit}>
+        <div className="form-group">
+          <label htmlFor="name">Name</label>
+          <input
+            type="text"
+            name="name"
+            value={name}
+            onChange={onChange}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="email">Email Address</label>
+          <input
+            type="email"
+            name="email"
+            value={email}
+            onChange={onChange}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            name="password"
+            value={password}
+            onChange={onChange}
+            minLength="6"
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="password2">Confirm password</label>
+          <input
+            type="password"
+            name="password2"
+            value={password2}
+            onChange={onChange}
+            minLength="6"
+            required
+          />
+        </div>
+        <input
+          type="submit"
+          value="Register"
+          className="btn btn-primary btn-block"
+        />
+      </form>
+    </div>
+  );
+};
 
-    onSubmit(e){
-        e.preventDefault();
-
-        const users={
-            username:this.state.username,
-            password:this.state.password,
-            role:this.state.role
-
-        }
-
-        console.log(users);
-        // axios.post('http://localhost:5000/user/register',users)
-        // .then(res => res.data)
-
-        // window.location = '/';
-    }
-
-    render(){
-        return(
-            <div>
-                <div>Create User</div>
-                <form onSubmit={this.onSubmit}>
-                    <div className="form-group">
-                        <label>Username:</label>
-                        <input 
-                        required
-                        type="text"
-                        className="form-control"
-                        value={this.state.username}
-                        onChange={this.onChangeName}/>
-                    </div>
-                    <div className="form-group">
-                        <label>Password:</label>
-                        <input type="password"
-                        required
-                        className="form-control"
-                        value={this.state.password}
-                        onChange={this.onChangePassword}/>
-                    </div>
-                    <div className="form-group">
-                        <label>Role:</label>
-                        <input 
-                        required
-                        type="text"
-                        className="form-control"
-                        value={this.state.role}
-                        onChange={this.onChangeRole}/>
-                    </div>
-                    <div className="form-group">
-                       <input type="submit" value="Create User Log" className="btn btn-primary"/>
-                    </div>
-                </form>
-            </div>
-        )
-    }
-}
+export default Register;
