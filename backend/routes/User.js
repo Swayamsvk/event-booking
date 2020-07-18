@@ -1,68 +1,75 @@
-const express = require('express');
-const userRouter = express.Router();
-const passport = require('passport');
-const passportConfig = require('../passport');
-const JWT = require('jsonwebtoken');
-const User = require('../models/User.model');
+const express = require("express");
+const router = express.Router();
+const { check, validationResult } = require("express-validator");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+// const config = require('config');
 
-const signToken = userID =>{
-    return JWT.sign({
-        iss : "NoobCoder",
-        sub : userID
-    },"NoobCoder",{expiresIn : "1h"});
-}
+const User = require("../models/User.model");
+//  @route POST api/users
+//  @desc Register a user
+//  @access Public
+router.post(
+  "/",
+  [
+    check("name", "Please add name").not().isEmpty(),
+    check("email", "Please include a valid email").isEmail(),
+    check(
+      "password",
+      "Please enter a password with 6 or more characters"
+    ).isLength({ min: 6 }),
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    const { name, email, password } = req.body;
 
-userRouter.post('/register',(req,res)=>{
-    const {username,password,role} = req.body;
-    User.findOne({username},(err,user)=>{
-        if(err)
-            res.status(500).json({message : {msgBody : "Error has occured",msgError: true}});
-        if(user)
-        res.status(400).json({message : {msgBody : "Username is already taken",msgError: true}});
-        else{
-            const newUser = new User({username,password,role})
-            newUser.save(err=>{
-                if(err)
-                res.status(500).json({message : {msgBody : "Error has occured",msgError: true}});
-                else
-                res.status(201).json({message : {msgBody : "Account successfully created",msgError: false}});
-            })
+    //for existing user
+
+    try {
+      let user = await User.findOne({ email });
+
+      if (user) {
+        return res.status(400).json({ msg: "User already exists" });
+      }
+
+      user = new User({
+        name,
+        email,
+        password,
+      });
+
+      const salt = await bcrypt.genSalt(10);
+
+      user.password = await bcrypt.hash(password, salt);
+
+      await user.save();
+
+      const payload = {
+        user: {
+          id: user.id,
+        },
+      };
+      const secret = {
+        jwtSecret: "secret",
+      };
+      jwt.sign(
+        payload,
+        secret.jwtSecret,
+        {
+          expiresIn: 360000,
+        },
+        (err, token) => {
+          if (err) throw err;
+          res.json({ token });
         }
-    })
-})
-
-userRouter.post('/login',passport.authenticate('local',{session : false}),(req,res)=>{
-    if(req.isAuthenticated()){
-        const {_id,username,role} = req.user;
-        const token =signToken(_id);
-        res.cookie('access_token',token,{httpOnly:true,sameSite:true});
-        res.status(200).json({isAuthenticated :true,user : {username,role}});
+      );
+    } catch (error) {
+      console.error(error.message);
+      res.status(500).send("Send Error");
     }
-})
-
-
-
-userRouter.get('/logout',passport.authenticate('jwt',{session : false}),(req,res)=>{
-    res.clearCookie('access_token');
-    res.json({user:{username : "", role : ""},success :true});
-})
-
-userRouter.get('/admin',passport.authenticate('jwt',{session : false}),(req,res)=>{
-    
-    if(req.user.role === 'admin'){
-        res.status(200).json({message : {msgBody : 'you are an admin',msgError : false}});
-    
-    }
-    else
-        res.status(403).json({message : {msgBody : "You are not an admin",msgError : true}});
-})
-
-//sync backend and frontend
-// userRouter.get('/authenticated',passport.authenticate('jwt',{session : false},(req,res)=>{
-//     const {username,role} = req.user;
-//     res.status(200).json({isAuthenticated : true,user : {username,role}});
-// }))
-
-
-
-module.exports = userRouter;
+  }
+);
+module.exports = router;
