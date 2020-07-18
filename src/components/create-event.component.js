@@ -95,7 +95,7 @@ export default class CreateEvent extends Component {
               />
             </div>
           </div>
-          <div className="form-group md-form md-outline input-with-post-icon timepicker">
+          <div className="form-group">
             <label>Time:</label>
             <input
               type="text"
