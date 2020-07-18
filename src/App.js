@@ -26,8 +26,8 @@ function App() {
             <Navbar />
             <br />
             <PrivateRoute exact path="/" exact component={EventList} />
-            <Route exact path="/edit/:id" component={EditEvent} />
-            <Route exact path="/create" component={CreateEvent} />
+            <PrivateRoute exact path="/edit/:id" component={EditEvent} />
+            <PrivateRoute exact path="/create" component={CreateEvent} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
           </div>
