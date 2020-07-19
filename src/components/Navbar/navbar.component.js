@@ -2,6 +2,7 @@ import React, { Fragment, useContext } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import AuthContext from "../../context/auth/authContext";
+import "./navbar.css";
 
 const Navbar = ({ title, icon }) => {
   const authContext = useContext(AuthContext);
@@ -14,26 +15,50 @@ const Navbar = ({ title, icon }) => {
 
   const authLinks = (
     <Fragment>
-      <li>Hello {user && user.name}</li>
-      <div>
-        <Link to="/" className="link_main nav-link" id="main">
+      <li
+        style={{ display: "inline-block", lineHeight: "70px", margin: "0 5px" }}
+      >
+        {user && user.name}
+      </li>
+      <div
+        style={{ display: "inline-block", lineHeight: "70px", margin: "0 5px" }}
+      >
+        <Link
+          to="/"
+          className="link_main nav-link"
+          id="main"
+          style={{ color: "white" }}
+        >
           Events Booking
         </Link>
       </div>
-      <li>
-        <Link to="/" className="nav-link link">
+      <li
+        style={{ display: "inline-block", lineHeight: "70px", margin: "0 5px" }}
+      >
+        <Link to="/" className="nav-link link" style={{ color: "white" }}>
           Events
         </Link>
       </li>
-      <li>
-        <Link to="/create" className="nav-link link">
+      <li
+        style={{ display: "inline-block", lineHeight: "70px", margin: "0 5px" }}
+      >
+        <Link to="/create" className="nav-link link" style={{ color: "white" }}>
           Create Event Log
         </Link>
       </li>
-      <li>
-        <a onClick={onLogout} href="#!">
-          <i className="fas fa-sign-out-alt"></i>{" "}
-          <span className="hide-sm">Logout</span>
+      <li
+        style={{
+          display: "inline-block",
+        }}
+      >
+        <a
+          onClick={onLogout}
+          href="#!"
+          style={{
+            color: "white",
+          }}
+        >
+          <i className="fas fa-sign-out-alt"></i> <span>Logout</span>
         </a>
       </li>
     </Fragment>
@@ -41,13 +66,25 @@ const Navbar = ({ title, icon }) => {
 
   const guestLinks = (
     <Fragment>
-      <li style={{ color: "white" }}>
-        <Link to="/register" className="nav-link link">
+      <li
+        style={{
+          display: "inline-block",
+          lineHeight: "70px",
+          margin: "0 5px",
+        }}
+      >
+        <Link
+          to="/register"
+          className="nav-link link"
+          style={{ color: "white" }}
+        >
           Register
         </Link>
       </li>
-      <li>
-        <Link to="/login" className="nav-link link">
+      <li
+        style={{ display: "inline-block", lineHeight: "70px", margin: "0 5px" }}
+      >
+        <Link to="/login" className="nav-link link" style={{ color: "white" }}>
           Login
         </Link>
       </li>
