@@ -13,6 +13,7 @@ import setAuthToken from "./utils/setAuthToken";
 import PrivateRoute from "./components/routing/PrivateRoute";
 import AuthState from "./context/auth/AuthState";
 import AlertState from "./context/alert/AlertState";
+import Shevents from "./components/Show-Events/Shevents";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -30,6 +31,7 @@ function App() {
             <PrivateRoute exact path="/create" component={CreateEvent} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
+            <Route exact path="/events" component={Shevents} />
           </div>
         </Router>
       </AlertState>
