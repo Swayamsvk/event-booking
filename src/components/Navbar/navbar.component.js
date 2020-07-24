@@ -88,6 +88,13 @@ const Navbar = ({ title, icon }) => {
           Login
         </Link>
       </li>
+      <li
+        style={{ display: "inline-block", lineHeight: "70px", margin: "0 5px" }}
+      >
+        <Link to="/events" className="nav-link link" style={{ color: "white" }}>
+          Events
+        </Link>
+      </li>
     </Fragment>
   );
   return (
