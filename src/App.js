@@ -14,6 +14,7 @@ import PrivateRoute from "./components/routing/PrivateRoute";
 import AuthState from "./context/auth/AuthState";
 import AlertState from "./context/alert/AlertState";
 import Shevents from "./components/Show-Events/Shevents";
+import Maps from "./components/map/Map";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -32,6 +33,7 @@ function App() {
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/events" component={Shevents} />
+            <Route exact path="/map" component={Maps} />
           </div>
         </Router>
       </AlertState>
