@@ -46,7 +46,8 @@ router.route("/update/:id").post((req, res) => {
     .then((event) => {
       event.name = req.body.name;
       event.date = Date.parse(req.body.date);
-      event.time = req.body.price;
+      event.time = req.body.time;
+      event.price = req.body.price;
       event.place = req.body.place;
 
       event

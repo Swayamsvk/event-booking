@@ -15,6 +15,8 @@ import AuthState from "./context/auth/AuthState";
 import AlertState from "./context/alert/AlertState";
 import Shevents from "./components/Show-Events/Shevents";
 import Maps from "./components/map/Map";
+import BookEvent from "./components/book-event.component";
+import MembersList from "./components/Members-List/members-list.component";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -34,6 +36,8 @@ function App() {
             <Route exact path="/login" component={Login} />
             <Route exact path="/events" component={Shevents} />
             <Route exact path="/map" component={Maps} />
+            <Route exact path="/booking" component={BookEvent} />
+            <PrivateRoute exact path="/bookinglist" component={MembersList} />
           </div>
         </Router>
       </AlertState>

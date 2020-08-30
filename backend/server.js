@@ -26,11 +26,15 @@ const userRouter = require("./routes/User");
 
 const authRoute = require("./routes/auth");
 
+const bookingRouter = require("./routes/Booking");
+
 app.use("/user", userRouter);
 
 app.use("/events", eventRouter);
 
 app.use("/auth", authRoute);
+
+app.use("/booking", bookingRouter);
 
 app.listen(port, () => {
   console.log(`server is running at port: ${port}`);
