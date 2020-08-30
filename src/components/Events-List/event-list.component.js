@@ -10,6 +10,8 @@ const Event = (props) => {
     authContext.loadUser();
     //eslint-disable-next-line
   }, []);
+
+  //return
   return (
     <tr>
       <td>{props.event.name}</td>
