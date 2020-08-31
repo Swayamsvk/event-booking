@@ -16,11 +16,9 @@
     "react-leaflet": "^2.7.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
-<<<<<<< HEAD
     "react-time-input": "0.0.19",
     "react-transition-group": "^4.4.1",
-=======
->>>>>>> master
+    "serialize-javascript": "^4.0.0",
     "websocket-extensions": "^0.1.4"
   },
   "scripts": {
