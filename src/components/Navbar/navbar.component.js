@@ -22,16 +22,7 @@ const Navbar = ({ title, icon }) => {
       </li>
       <div
         style={{ display: "inline-block", lineHeight: "70px", margin: "0 5px" }}
-      >
-        <Link
-          to="/"
-          className="link_main nav-link"
-          id="main"
-          style={{ color: "white" }}
-        >
-          Events Booking
-        </Link>
-      </div>
+      ></div>
       <li
         style={{ display: "inline-block", lineHeight: "70px", margin: "0 5px" }}
       >
@@ -42,8 +33,29 @@ const Navbar = ({ title, icon }) => {
       <li
         style={{ display: "inline-block", lineHeight: "70px", margin: "0 5px" }}
       >
-        <Link to="/create" className="nav-link link" style={{ color: "white" }}>
+        <Link
+          to="/create"
+          className="nav-link link"
+          style={{
+            display: "inline-block",
+            lineHeight: "70px",
+            margin: "0 5px",
+            color: "white",
+          }}
+        >
           Create Event Log
+        </Link>
+        <Link
+          to="/bookinglist"
+          className="nav-link link"
+          style={{
+            display: "inline-block",
+            lineHeight: "70px",
+            margin: "0 5px",
+            color: "white",
+          }}
+        >
+          Members-Booked
         </Link>
       </li>
       <li
@@ -91,8 +103,41 @@ const Navbar = ({ title, icon }) => {
       <li
         style={{ display: "inline-block", lineHeight: "70px", margin: "0 5px" }}
       >
-        <Link to="/events" className="nav-link link" style={{ color: "white" }}>
+        <Link
+          to="/events"
+          className="nav-link link"
+          style={{
+            display: "inline-block",
+            lineHeight: "70px",
+            margin: "0 5px",
+            color: "white",
+          }}
+        >
           Events
+        </Link>
+        <Link
+          to="/map"
+          className="nav-link link"
+          style={{
+            display: "inline-block",
+            lineHeight: "70px",
+            margin: "0 5px",
+            color: "white",
+          }}
+        >
+          Map
+        </Link>
+        <Link
+          to="/booking"
+          className="nav-link link"
+          style={{
+            display: "inline-block",
+            lineHeight: "70px",
+            margin: "0 5px",
+            color: "white",
+          }}
+        >
+          Booking
         </Link>
       </li>
     </Fragment>

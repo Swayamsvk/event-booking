@@ -1,0 +1,39 @@
+h3 {
+  font-family: "Roboto", sans-serif;
+  color: #0082e6;
+}
+.content-table {
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  min-width: 400px;
+  border-radius: 5px 5px 0 0;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.content-table thread tr {
+  background-color: #ffffff;
+  text-align: left;
+}
+.content-table th {
+  color: #1b9bff;
+}
+
+.content-table th,
+.content-table td {
+  padding: 12px 15px;
+  font-size: 17px;
+}
+
+.content table tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+.content-table tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+.content-table tbody tr:last-of-type {
+  border-bottom: 2px solid#1b9bff;
+}
